@@ -1,94 +1,123 @@
--- =========================
--- Script Loader GUI Profissional
--- =========================
+-- GUI CLEAN PROFISSIONAL ----------------------------------------------------
 
--- Criar GUI
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "ScriptLoaderMenu"
-ScreenGui.Parent = game.CoreGui
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
 
--- Frame principal
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 200, 0, 150)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -75)
-Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20) -- fundo preto fosco
-Frame.BorderSizePixel = 0
-Frame.Active = true
-Frame.Draggable = true
-Frame.Parent = ScreenGui
-Frame.Visible = false
+-- Tela
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.CoreGui
+gui.ResetOnSpawn = false
 
--- Título do menu
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.Position = UDim2.new(0, 0, 0, 0)
-Title.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- cinza escuro
-Title.BorderSizePixel = 0
-Title.Text = "Script Loader"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 16
-Title.Parent = Frame
+-- Janela Principal
+local frame = Instance.new("Frame")
+frame.Size = UDim2.fromOffset(260, 260)
+frame.Position = UDim2.new(0.5, -130, 0.5, -130)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+frame.Active = true
+frame.Draggable = true
+frame.Visible = false
 
--- Botão de fechar
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 25, 0, 25)
-CloseBtn.Position = UDim2.new(1, -30, 0, 2)
-CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50) -- vermelho discreto
-CloseBtn.BorderSizePixel = 0
-CloseBtn.Text = "X"
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 16
-CloseBtn.Parent = Frame
+-- Arredondamento
+Instance.new("UICorner", frame)
 
-CloseBtn.MouseButton1Click:Connect(function()
-    Frame.Visible = false
+-- Título
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+title.BorderSizePixel = 0
+title.Text = "📜 Script Loader"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 18
+title.Parent = frame
+Instance.new("UICorner", title)
+
+-- Fechar
+local close = Instance.new("TextButton")
+close.Size = UDim2.fromOffset(30, 30)
+close.Position = UDim2.new(1, -40, 0, 5)
+close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(255, 255, 255)
+close.Font = Enum.Font.GothamBold
+close.TextSize = 16
+close.Parent = frame
+Instance.new("UICorner", close)
+
+close.MouseButton1Click:Connect(function()
+    frame.Visible = false
 end)
 
--- Função para criar botões de script
-local function criarBotao(texto, posicao, url)
-    local Botao = Instance.new("TextButton")
-    Botao.Size = UDim2.new(0, 180, 0, 40)
-    Botao.Position = posicao
-    Botao.BackgroundColor3 = Color3.fromRGB(45, 45, 45) -- cinza escuro
-    Botao.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Botao.Font = Enum.Font.GothamSemibold
-    Botao.TextSize = 14
-    Botao.Text = texto
-    Botao.BorderSizePixel = 0
-    Botao.Parent = Frame
+-- Layout de botões
+local holder = Instance.new("Frame")
+holder.Size = UDim2.new(1, -20, 1, -60)
+holder.Position = UDim2.new(0, 10, 0, 50)
+holder.BackgroundTransparency = 1
+holder.Parent = frame
 
-    -- Hover suave
-    Botao.MouseEnter:Connect(function()
-        Botao.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
-    end)
-    Botao.MouseLeave:Connect(function()
-        Botao.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+local list = Instance.new("UIListLayout")
+list.Parent = holder
+list.Padding = UDim.new(0, 10)
+list.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+-- Criador de botões
+local function addButton(nome, url)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 40)
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    btn.Text = nome
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.TextSize = 15
+    btn.Parent = holder
+    Instance.new("UICorner", btn)
+
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.15), {
+            BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        }):Play()
     end)
 
-    -- Carregar script
-    Botao.MouseButton1Click:Connect(function()
-        local sucesso, resultado = pcall(function()
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.15), {
+            BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        }):Play()
+    end)
+
+    btn.MouseButton1Click:Connect(function()
+        pcall(function()
             loadstring(game:HttpGet(url))()
         end)
-        if not sucesso then
-            warn("Erro ao carregar script: "..resultado)
-        end
     end)
 end
 
--- Criar botões
-criarBotao("Carregar Aimbot", UDim2.new(0, 10, 0, 40), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/aimbot.lua")
-criarBotao("Carregar ESP", UDim2.new(0, 10, 0, 85), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/esp.lua")
-criarBotao("Carregar Fly", UDim2.new(0, 10, 0, 130), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/fly.lua")
-criarBotao("Carregar TouchFling", UDim2.new(0, 10, 0, 130), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
+-- Botões reais
+addButton("🎯 Aimbot",       "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/aimbot.lua")
+addButton("👁 ESP",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/esp.lua")
+addButton("🕊 Fly",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/fly.lua")
+addButton("⚡ TouchFling",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
 
--- Abrir/fechar menu com Right Shift
-local UserInputService = game:GetService("UserInputService")
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if not gameProcessed and input.KeyCode == Enum.KeyCode.RightShift then
-        Frame.Visible = not Frame.Visible
+-- Atalhos
+UIS.InputBegan:Connect(function(i, g)
+    if not g and i.KeyCode == Enum.KeyCode.RightShift then
+        frame.Visible = not frame.Visible
     end
 end)
 
+-- Animação Fade-in
+frame.BackgroundTransparency = 1
+title.BackgroundTransparency = 1
+holder.BackgroundTransparency = 1
+
+task.wait(0.1)
+
+for _, obj in ipairs(frame:GetDescendants()) do
+    if obj:IsA("Frame") or obj:IsA("TextLabel") or obj:IsA("TextButton") then
+        obj.BackgroundTransparency = 1
+        TweenService:Create(obj, TweenInfo.new(.3), {BackgroundTransparency = 0}):Play()
+    end
+end
+
+TweenService:Create(frame, TweenInfo.new(.3), {BackgroundTransparency = 0}):Play()
