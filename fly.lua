@@ -27,7 +27,7 @@ local down = Instance.new("TextButton")
 local onof = Instance.new("TextButton")
 local TextLabel = Instance.new("TextLabel")
 local plus = Instance.new("TextButton")
-local speedTextBox = Instance.new("TextBox") -- ALTERAÇÃO: TextLabel para TextBox
+local speedTextBox = Instance.new("TextBox") -- ALTERAÇÃO: Agora é um TextBox
 local mine = Instance.new("TextButton")
 local closeButton = Instance.new("TextButton")
 local miniButton = Instance.new("TextButton")
@@ -46,7 +46,7 @@ Frame.Name = "Frame"
 Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Dark Background
 Frame.BorderColor3 = Color3.fromRGB(0, 200, 255) -- Cyan/Blue Border
 Frame.Position = UDim2.new(0.1, 0, 0.38, 0)
-Frame.Size = UDim2.new(0, 190, 0, 80) -- Aumentei um pouco a altura
+Frame.Size = UDim2.new(0, 190, 0, 80)
 Frame.Active = true
 Frame.Draggable = true
 
@@ -65,7 +65,7 @@ TextLabel.TextWrapped = true
 -- UP BUTTON
 up.Name = "up"
 up.Parent = Frame
-up.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Dark Gray
+up.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 up.BorderColor3 = Color3.fromRGB(0, 0, 0)
 up.Position = UDim2.new(0, 0, 0.35, 0)
 up.Size = UDim2.new(0, 44, 0, 26)
@@ -77,7 +77,7 @@ up.TextSize = 14
 -- DOWN BUTTON
 down.Name = "down"
 down.Parent = Frame
-down.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Dark Gray
+down.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 down.BorderColor3 = Color3.fromRGB(0, 0, 0)
 down.Position = UDim2.new(0, 0, 0.675, 0)
 down.Size = UDim2.new(0, 44, 0, 26)
@@ -89,30 +89,30 @@ down.TextSize = 14
 -- PLUS BUTTON
 plus.Name = "plus"
 plus.Parent = Frame
-plus.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Lighter Gray
+plus.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
 plus.BorderColor3 = Color3.fromRGB(0, 0, 0)
 plus.Position = UDim2.new(0.24, 0, 0.35, 0)
 plus.Size = UDim2.new(0, 45, 0, 26)
 plus.Font = Enum.Font.SourceSans
 plus.Text = "+"
-plus.TextColor3 = Color3.fromRGB(0, 255, 0) -- Green for Plus
+plus.TextColor3 = Color3.fromRGB(0, 255, 0)
 plus.TextScaled = true
 plus.TextSize = 20
 
 -- MINUS BUTTON
 mine.Name = "mine"
 mine.Parent = Frame
-mine.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Lighter Gray
+mine.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
 mine.BorderColor3 = Color3.fromRGB(0, 0, 0)
 mine.Position = UDim2.new(0.24, 0, 0.675, 0)
 mine.Size = UDim2.new(0, 45, 0, 26)
 mine.Font = Enum.Font.SourceSans
 mine.Text = "-"
-mine.TextColor3 = Color3.fromRGB(255, 0, 0) -- Red for Minus
+mine.TextColor3 = Color3.fromRGB(255, 0, 0)
 mine.TextScaled = true
 mine.TextSize = 20
 
--- SPEED DISPLAY (AGORA É TextBox)
+-- SPEED TEXTBOX (AGORA É TextBox para digitar)
 speedTextBox.Name = "speed"
 speedTextBox.Parent = Frame
 speedTextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
@@ -120,18 +120,20 @@ speedTextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
 speedTextBox.Position = UDim2.new(0.49, 0, 0.35, 0)
 speedTextBox.Size = UDim2.new(0, 44, 0, 26)
 speedTextBox.Font = Enum.Font.SourceSans
-speedTextBox.Text = Speeds -- Exibe a velocidade inicial
+speedTextBox.Text = tostring(Speeds) -- Usa tostring() para garantir que seja string
 speedTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 speedTextBox.TextScaled = true
 speedTextBox.TextSize = 14
-speedTextBox.ClearTextOnFocus = false -- Útil para não apagar o texto ao clicar
-speedTextBox.TextXAlignment = Enum.TextXAlignment.Center -- Centraliza o texto
+speedTextBox.ClearTextOnFocus = false
+speedTextBox.TextXAlignment = Enum.TextXAlignment.Center
 speedTextBox.PlaceholderText = "Speed"
+speedTextBox.KeyboardType = Enum.KeyboardType.Numeric -- Sugere teclado numérico
+speedTextBox.TextEditable = true -- Garante que é editável
 
 -- ON/OFF TOGGLE
 onof.Name = "onof"
 onof.Parent = Frame
-onof.BackgroundColor3 = Color3.fromRGB(255, 150, 0) -- Orange/Yellow Off Color
+onof.BackgroundColor3 = Color3.fromRGB(255, 150, 0)
 onof.BorderColor3 = Color3.fromRGB(0, 0, 0)
 onof.Position = UDim2.new(0.74, 0, 0.35, 0)
 onof.Size = UDim2.new(0, 47, 0, 58)
@@ -143,7 +145,7 @@ onof.TextSize = 18
 -- CLOSE BUTTON (Top Right)
 closeButton.Name = "Close"
 closeButton.Parent = Frame
-closeButton.BackgroundColor3 = Color3.fromRGB(150, 0, 0) -- Dark Red
+closeButton.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
 closeButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 closeButton.Font = Enum.Font.SourceSansBold
 closeButton.Size = UDim2.new(0, 28, 0, 28)
@@ -171,7 +173,7 @@ maxiButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 maxiButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 maxiButton.Font = Enum.Font.SourceSansBold
 maxiButton.Size = UDim2.new(0, 28, 0, 28)
-maxiButton.Text = "☐" -- Quadrado para representar maximizar
+maxiButton.Text = "☐"
 maxiButton.TextSize = 20
 maxiButton.Position = UDim2.new(1, -56, 0, 0)
 maxiButton.Visible = false
@@ -183,7 +185,7 @@ minimizedSpeedLabel.Parent = Frame
 minimizedSpeedLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 minimizedSpeedLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 minimizedSpeedLabel.Position = UDim2.new(0, 0, 0, 28)
-minimizedSpeedLabel.Size = UDim2.new(1, -56, 0, 52) -- Ocupa o espaço onde os botões estariam
+minimizedSpeedLabel.Size = UDim2.new(1, -56, 0, 52)
 minimizedSpeedLabel.Font = Enum.Font.SourceSansBold
 minimizedSpeedLabel.Text = ""
 minimizedSpeedLabel.TextColor3 = Color3.fromRGB(0, 255, 255)
@@ -219,14 +221,12 @@ local function flyLoop(torsoPart)
     local lastctrl = {f = 0, b = 0, l = 0, r = 0}
     local currentSpeed = 0
     
-    -- Function to handle player input for movement while flying
     local function onMove(inputObject, gameProcessed)
         if gameProcessed then return end
         
         local key = inputObject.KeyCode
         local isDown = inputObject.UserInputState == Enum.UserInputState.Begin
         
-        -- Usa MaxSpeed na lógica de BodyVelocity
         if key == Enum.KeyCode.W then ctrl.f = isDown and MaxSpeed or 0 end
         if key == Enum.KeyCode.S then ctrl.b = isDown and -MaxSpeed or 0 end
         if key == Enum.KeyCode.A then ctrl.l = isDown and -MaxSpeed or 0 end
@@ -268,7 +268,6 @@ local function flyLoop(torsoPart)
         bg.CFrame = Camera.CFrame
     end)
     
-    -- Wait until flying stops
     while IsFlying and Humanoid.Health > 0 do
         RunService.RenderStepped:Wait() 
     end
@@ -283,21 +282,38 @@ end
 local function teleportWalkLoop()
     tpwalking = true
     
-    -- Cria um loop de Heartbeat separado para o Teleport Walk
     local hbConnection = RunService.Heartbeat:Connect(function()
         if tpwalking and IsFlying and Humanoid.MoveDirection.Magnitude > 0 then
-            -- Multiplica a translação pela velocidade atual para torná-lo útil
+            -- Usa a variável Speeds para a velocidade de translação
             Character:TranslateBy(Humanoid.MoveDirection * Speeds)
         end
     end)
     
-    -- Espera que o IsFlying/tpwalking seja desativado
     while IsFlying and tpwalking do
         RunService.Heartbeat:Wait()
     end
     
     hbConnection:Disconnect()
     tpwalking = false
+end
+
+--// HELPER FUNCTION: Valida e atualiza Speeds
+local function updateSpeeds(newValue)
+    local newSpeed = tonumber(newValue)
+    
+    if newSpeed and newSpeed >= 1 and newSpeed <= 1000 then -- Limite razoável para evitar crashes (1000)
+        Speeds = newSpeed
+        speedTextBox.Text = tostring(Speeds) -- Atualiza o TextBox
+        minimizedSpeedLabel.Text = "FLY SPEED: " .. Speeds -- Atualiza o label minimizado
+    else
+        -- Reverte para o último valor válido e mostra um feedback visual temporário
+        speedTextBox.Text = tostring(Speeds)
+        
+        local originalColor = speedTextBox.BackgroundColor3
+        speedTextBox.BackgroundColor3 = Color3.fromRGB(255, 50, 50) -- Vermelho para erro
+        wait(0.2)
+        speedTextBox.BackgroundColor3 = originalColor
+    end
 end
 
 --// MAIN TOGGLE FUNCTION
@@ -325,12 +341,10 @@ local function toggleFly()
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, false)
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, false)
-        Humanoid:ChangeState(Enum.HumanoidStateType.Swimming) -- Change state to something stable
+        Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
         
-        -- Start the Teleport Walk logic
         spawn(teleportWalkLoop)
         
-        -- Start the Physics Fly logic (R6/R15 check)
         local torsoPart = Humanoid.RigType == Enum.HumanoidRigType.R6 and Character:FindFirstChild("Torso") or Character:FindFirstChild("UpperTorso")
         if torsoPart then
             spawn(function() flyLoop(torsoPart) end)
@@ -358,25 +372,7 @@ local function toggleFly()
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, true)
         Humanoid:ChangeState(Enum.HumanoidStateType.Running)
         
-        -- Stop Teleport Walk loop
         tpwalking = false
-    end
-end
-
---// HELPER FUNCTION: Valida e atualiza Speeds
-local function updateSpeeds(newValue)
-    local newSpeed = tonumber(newValue)
-    if newSpeed and newSpeed >= 1 then -- Garante que é um número e >= 1
-        Speeds = newSpeed
-        speedTextBox.Text = Speeds -- Atualiza o TextBox
-        minimizedSpeedLabel.Text = "FLY SPEED: " .. Speeds -- Atualiza o label minimizado
-    else
-        -- Opcional: Reverter para o último valor válido ou mostrar erro
-        speedTextBox.Text = Speeds
-        -- Opcional: Mostrar uma mensagem de erro temporária no TextBox
-        -- speedTextBox.PlaceholderText = "Inválido!"
-        -- wait(1)
-        -- speedTextBox.PlaceholderText = "Speed"
     end
 end
 
@@ -394,8 +390,8 @@ up.MouseButton1Down:Connect(function()
     
     continuousMoveConnection = RunService.RenderStepped:Connect(function()
         if Character and Character:FindFirstChild("HumanoidRootPart") then
-            -- Usa Speeds para o movimento vertical também
-            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, Speeds / 10, 0) 
+            -- Usa Speeds para o movimento vertical
+            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, Speeds / 10, 0)
         end
     end)
 end)
@@ -413,8 +409,8 @@ down.MouseButton1Down:Connect(function()
 
     continuousMoveConnection = RunService.RenderStepped:Connect(function()
         if Character and Character:FindFirstChild("HumanoidRootPart") then
-            -- Usa Speeds para o movimento vertical também
-            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, -Speeds / 10, 0) 
+            -- Usa Speeds para o movimento vertical
+            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, -Speeds / 10, 0)
         end
     end)
 end)
@@ -429,24 +425,24 @@ end)
 -- Plus Button (Increase speed)
 plus.MouseButton1Down:Connect(function()
     Speeds = Speeds + 1
-    updateSpeeds(Speeds) -- Usa a função auxiliar
+    updateSpeeds(Speeds)
 end)
 
 -- Minus Button (Decrease speed)
 mine.MouseButton1Down:Connect(function()
     if Speeds > 1 then
         Speeds = Speeds - 1
-        updateSpeeds(Speeds) -- Usa a função auxiliar
+        updateSpeeds(Speeds)
     else
         speedTextBox.Text = 'MIN SPEED'
         wait(0.5)
-        updateSpeeds(Speeds) -- Garante que ele volte a 1
+        updateSpeeds(Speeds)
     end
 end)
 
--- ALTERAÇÃO: Conexão para o TextBox
+-- NOVA CONEXÃO: Campo de Texto para Digitar a Velocidade
 speedTextBox.FocusLost:Connect(function(enterPressed)
-    -- O FocusLost é acionado quando o usuário clica fora do TextBox ou pressiona ENTER
+    -- Dispara quando o usuário pressiona ENTER ou clica fora
     updateSpeeds(speedTextBox.Text)
 end)
 
@@ -462,15 +458,13 @@ miniButton.MouseButton1Click:Connect(function()
     down.Visible = false
     onof.Visible = false
     plus.Visible = false
-    speedTextBox.Visible = false -- ALTERAÇÃO: speedTextBox
+    speedTextBox.Visible = false
     mine.Visible = false
     miniButton.Visible = false
     maxiButton.Visible = true
     
-    -- Adjust Frame size to minimized state
     Frame.Size = UDim2.new(0, 190, 0, 28) 
     
-    -- Show Speed label in minimized state
     minimizedSpeedLabel.Text = "FLY SPEED: " .. Speeds
     minimizedSpeedLabel.Visible = true
 end)
@@ -481,15 +475,13 @@ maxiButton.MouseButton1Click:Connect(function()
     down.Visible = true
     onof.Visible = true
     plus.Visible = true
-    speedTextBox.Visible = true -- ALTERAÇÃO: speedTextBox
+    speedTextBox.Visible = true
     mine.Visible = true
     miniButton.Visible = true
     maxiButton.Visible = false
     
-    -- Adjust Frame size back to normal
     Frame.Size = UDim2.new(0, 190, 0, 80)
     
-    -- Hide minimized speed label
     minimizedSpeedLabel.Visible = false
 end)
 
@@ -498,7 +490,6 @@ LocalPlayer.CharacterAdded:Connect(function(char)
     Character = char
     Humanoid = char:WaitForChild("Humanoid")
     
-    -- Reseta o estado do Fly ao spawnar
     if IsFlying then
         IsFlying = false
         toggleFly() 
