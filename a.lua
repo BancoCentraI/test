@@ -8,20 +8,19 @@ local gui = Instance.new("ScreenGui")
 gui.Parent = game.CoreGui
 gui.ResetOnSpawn = false
 
--- Janela Principal (tema preto + cinza)
+-- Janela Principal
 local frame = Instance.new("Frame")
-frame.Size = UDim2.fromOffset(320, 360)
-frame.Position = UDim2.new(0.5, -160, 0.5, -180)
+frame.Size = UDim2.fromOffset(350, 420)
+frame.Position = UDim2.new(0.5, -175, 0.5, -210)
 frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 frame.BorderSizePixel = 0
 frame.Parent = gui
 frame.Active = true
 frame.Draggable = true
 frame.Visible = false
-
 Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
 
--- Linha cinza superior
+-- Topbar
 local topbar = Instance.new("Frame")
 topbar.Size = UDim2.new(1, 0, 0, 40)
 topbar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -50,7 +49,6 @@ close.TextColor3 = Color3.fromRGB(255, 90, 90)
 close.Font = Enum.Font.GothamBold
 close.TextSize = 16
 close.Parent = topbar
-
 Instance.new("UICorner", close).CornerRadius = UDim.new(0, 8)
 
 close.MouseEnter:Connect(function()
@@ -69,19 +67,26 @@ close.MouseButton1Click:Connect(function()
     frame.Visible = false
 end)
 
--- Área dos botões
-local holder = Instance.new("Frame")
-holder.Size = UDim2.new(1, -40, 1, -70)
-holder.Position = UDim2.new(0, 20, 0, 55)
-holder.BackgroundTransparency = 1
-holder.Parent = frame
+-- SCROLL LIST (NÃO QUEBRA NUNCA)
+local scroll = Instance.new("ScrollingFrame")
+scroll.Size = UDim2.new(1, -40, 1, -70)
+scroll.Position = UDim2.new(0, 20, 0, 55)
+scroll.BackgroundTransparency = 1
+scroll.ScrollBarThickness = 4
+scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+scroll.ScrollBarImageColor3 = Color3.fromRGB(90,90,90)
+scroll.Parent = frame
 
 local list = Instance.new("UIListLayout")
-list.Parent = holder
+list.Parent = scroll
 list.Padding = UDim.new(0, 12)
 list.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
--- FUNÇÃO GLOBAL DE BOTÕES (SINCRONIZADA)
+list:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    scroll.CanvasSize = UDim2.fromOffset(0, list.AbsoluteContentSize.Y + 10)
+end)
+
+-- FUNÇÃO GLOBAL DE BOTÕES
 local function novoBotao(texto, url)
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(1, 0, 0, 50)
@@ -91,7 +96,7 @@ local function novoBotao(texto, url)
     btn.Font = Enum.Font.GothamSemibold
     btn.TextSize = 16
     btn.BorderSizePixel = 0
-    btn.Parent = holder
+    btn.Parent = scroll
 
     Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
 
@@ -121,7 +126,7 @@ local function novoBotao(texto, url)
         }):Play()
     end)
 
-    -- Carregar Script
+    -- Executar script
     btn.MouseButton1Click:Connect(function()
         pcall(function()
             loadstring(game:HttpGet(url))()
@@ -130,14 +135,14 @@ local function novoBotao(texto, url)
 end
 
 -- BOTÕES ------------------------------------------------------
+
 novoBotao("Aimbot",       "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/aimbot.lua")
 novoBotao("ESP",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/esp.lua")
 novoBotao("Fly",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/fly.lua")
-novoBotao("TouchFling",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
-novoBotao("Stalker",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/stalker.lua")
-novoBotao("TpPlayer",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/tpplayer.lua")
-novoBotao("NobanVoice",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/voiceremoveban5minutos.lua")
-----------------------------------------------------------------
+novoBotao("TouchFling",   "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
+novoBotao("Stalker",      "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/stalker.lua")
+novoBotao("TP Player",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/tpplayer.lua")
+novoBotao("NobanVoice",   "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/voiceremoveban5minutos.lua")
 
 -- Abrir / Fechar com RightShift
 UIS.InputBegan:Connect(function(key, g)
@@ -145,4 +150,3 @@ UIS.InputBegan:Connect(function(key, g)
         frame.Visible = not frame.Visible
     end
 end)
-
