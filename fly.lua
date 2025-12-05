@@ -249,8 +249,8 @@ addHoverEffect(miniButton, defaultMiniColor, hoverMiniColor)
 --// INITIAL NOTIFICATION
 
 StarterGui:SetCore("SendNotification", { 
-	Title = "FLY GUI V6 - DARK ENHANCED";
-	Text = "DESIGN BY USER (XNEO)";
+	Title = "FLY GUI";
+	Text = "DESIGN BY USER HAX";
 	Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"
 })
 
@@ -305,3 +305,4 @@ local function flyLoop(torsoPart)
             bv.Velocity = moveVector.unit * currentSpeed
             lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
         elseif currentSpeed ~= 0 then
+
