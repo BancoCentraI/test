@@ -79,9 +79,10 @@ local function criarBotao(texto, posicao, url)
 end
 
 -- Criar botões
-criarBotao("Carregar Aimbot", UDim2.new(0, 10, 0, 40), "https://pastebin.com/raw/j9rzfuxT")
-criarBotao("Carregar ESP", UDim2.new(0, 10, 0, 85), "https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt")
-criarBotao("Carregar Fly", UDim2.new(0, 10, 0, 130), "https://raw.githubusercontent.com/Exunys/Aimbot-V2/main/Resources/Scripts/Raw%20Main.lua")
+criarBotao("Carregar Aimbot", UDim2.new(0, 10, 0, 40), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/aimbot.lua")
+criarBotao("Carregar ESP", UDim2.new(0, 10, 0, 85), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/esp.lua")
+criarBotao("Carregar Fly", UDim2.new(0, 10, 0, 130), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/fly.lua")
+criarBotao("Carregar TouchFling", UDim2.new(0, 10, 0, 130), "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
 
 -- Abrir/fechar menu com Right Shift
 local UserInputService = game:GetService("UserInputService")
@@ -90,3 +91,4 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         Frame.Visible = not Frame.Visible
     end
 end)
+
