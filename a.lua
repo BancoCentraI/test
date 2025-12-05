@@ -134,6 +134,9 @@ novoBotao("Aimbot",       "https://raw.githubusercontent.com/BancoCentraI/test/r
 novoBotao("ESP",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/esp.lua")
 novoBotao("Fly",          "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/fly.lua")
 novoBotao("TouchFling",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/touchfling.lua")
+novoBotao("Stalker",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/stalker.lua")
+novoBotao("TpPlayer",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/tpplayer.lua")
+novoBotao("NobanVoice",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/voiceremoveban5minutos.lua")
 ----------------------------------------------------------------
 
 -- Abrir / Fechar com RightShift
@@ -142,3 +145,4 @@ UIS.InputBegan:Connect(function(key, g)
         frame.Visible = not frame.Visible
     end
 end)
+
