@@ -27,11 +27,11 @@ local down = Instance.new("TextButton")
 local onof = Instance.new("TextButton")
 local TextLabel = Instance.new("TextLabel")
 local plus = Instance.new("TextButton")
-local speedText = Instance.new("TextLabel")
+local speedTextBox = Instance.new("TextBox") -- ALTERAÇÃO: TextLabel para TextBox
 local mine = Instance.new("TextButton")
 local closeButton = Instance.new("TextButton")
 local miniButton = Instance.new("TextButton")
-local maxiButton = Instance.new("TextButton") -- Renomeado mini2 para maxiButton
+local maxiButton = Instance.new("TextButton")
 
 --// GUI SETUP
 
@@ -112,18 +112,21 @@ mine.TextColor3 = Color3.fromRGB(255, 0, 0) -- Red for Minus
 mine.TextScaled = true
 mine.TextSize = 20
 
--- SPEED DISPLAY
-speedText.Name = "speed"
-speedText.Parent = Frame
-speedText.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-speedText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-speedText.Position = UDim2.new(0.49, 0, 0.35, 0)
-speedText.Size = UDim2.new(0, 44, 0, 26)
-speedText.Font = Enum.Font.SourceSans
-speedText.Text = Speeds
-speedText.TextColor3 = Color3.fromRGB(255, 255, 255)
-speedText.TextScaled = true
-speedText.TextSize = 14
+-- SPEED DISPLAY (AGORA É TextBox)
+speedTextBox.Name = "speed"
+speedTextBox.Parent = Frame
+speedTextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+speedTextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+speedTextBox.Position = UDim2.new(0.49, 0, 0.35, 0)
+speedTextBox.Size = UDim2.new(0, 44, 0, 26)
+speedTextBox.Font = Enum.Font.SourceSans
+speedTextBox.Text = Speeds -- Exibe a velocidade inicial
+speedTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedTextBox.TextScaled = true
+speedTextBox.TextSize = 14
+speedTextBox.ClearTextOnFocus = false -- Útil para não apagar o texto ao clicar
+speedTextBox.TextXAlignment = Enum.TextXAlignment.Center -- Centraliza o texto
+speedTextBox.PlaceholderText = "Speed"
 
 -- ON/OFF TOGGLE
 onof.Name = "onof"
@@ -174,7 +177,7 @@ maxiButton.Position = UDim2.new(1, -56, 0, 0)
 maxiButton.Visible = false
 maxiButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Speed Label for Minimized State (Moved speed display logic)
+-- Speed Label for Minimized State
 local minimizedSpeedLabel = Instance.new("TextLabel")
 minimizedSpeedLabel.Parent = Frame
 minimizedSpeedLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -192,9 +195,9 @@ minimizedSpeedLabel.Visible = false
 --// INITIAL NOTIFICATION
 
 StarterGui:SetCore("SendNotification", { 
-	Title = "FLY GUI V4";
-	Text = "BY HAX";
-	Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"
+    Title = "FLY GUI V4";
+    Text = "BY HAX";
+    Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"
 })
 
 --// CORE FLY LOGIC (BodyVelocity/BodyGyro)
@@ -223,6 +226,7 @@ local function flyLoop(torsoPart)
         local key = inputObject.KeyCode
         local isDown = inputObject.UserInputState == Enum.UserInputState.Begin
         
+        -- Usa MaxSpeed na lógica de BodyVelocity
         if key == Enum.KeyCode.W then ctrl.f = isDown and MaxSpeed or 0 end
         if key == Enum.KeyCode.S then ctrl.b = isDown and -MaxSpeed or 0 end
         if key == Enum.KeyCode.A then ctrl.l = isDown and -MaxSpeed or 0 end
@@ -359,6 +363,23 @@ local function toggleFly()
     end
 end
 
+--// HELPER FUNCTION: Valida e atualiza Speeds
+local function updateSpeeds(newValue)
+    local newSpeed = tonumber(newValue)
+    if newSpeed and newSpeed >= 1 then -- Garante que é um número e >= 1
+        Speeds = newSpeed
+        speedTextBox.Text = Speeds -- Atualiza o TextBox
+        minimizedSpeedLabel.Text = "FLY SPEED: " .. Speeds -- Atualiza o label minimizado
+    else
+        -- Opcional: Reverter para o último valor válido ou mostrar erro
+        speedTextBox.Text = Speeds
+        -- Opcional: Mostrar uma mensagem de erro temporária no TextBox
+        -- speedTextBox.PlaceholderText = "Inválido!"
+        -- wait(1)
+        -- speedTextBox.PlaceholderText = "Speed"
+    end
+end
+
 --// BUTTON CONNECTIONS
 
 -- Fly Toggle
@@ -373,7 +394,8 @@ up.MouseButton1Down:Connect(function()
     
     continuousMoveConnection = RunService.RenderStepped:Connect(function()
         if Character and Character:FindFirstChild("HumanoidRootPart") then
-            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, 1.5, 0) -- Increased speed slightly
+            -- Usa Speeds para o movimento vertical também
+            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, Speeds / 10, 0) 
         end
     end)
 end)
@@ -391,7 +413,8 @@ down.MouseButton1Down:Connect(function()
 
     continuousMoveConnection = RunService.RenderStepped:Connect(function()
         if Character and Character:FindFirstChild("HumanoidRootPart") then
-            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, -1.5, 0) -- Increased speed slightly
+            -- Usa Speeds para o movimento vertical também
+            Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, -Speeds / 10, 0) 
         end
     end)
 end)
@@ -406,19 +429,25 @@ end)
 -- Plus Button (Increase speed)
 plus.MouseButton1Down:Connect(function()
     Speeds = Speeds + 1
-    speedText.Text = Speeds
+    updateSpeeds(Speeds) -- Usa a função auxiliar
 end)
 
 -- Minus Button (Decrease speed)
 mine.MouseButton1Down:Connect(function()
     if Speeds > 1 then
         Speeds = Speeds - 1
-        speedText.Text = Speeds
+        updateSpeeds(Speeds) -- Usa a função auxiliar
     else
-        speedText.Text = 'MIN SPEED'
+        speedTextBox.Text = 'MIN SPEED'
         wait(0.5)
-        speedText.Text = Speeds
+        updateSpeeds(Speeds) -- Garante que ele volte a 1
     end
+end)
+
+-- ALTERAÇÃO: Conexão para o TextBox
+speedTextBox.FocusLost:Connect(function(enterPressed)
+    -- O FocusLost é acionado quando o usuário clica fora do TextBox ou pressiona ENTER
+    updateSpeeds(speedTextBox.Text)
 end)
 
 -- Close Button
@@ -433,7 +462,7 @@ miniButton.MouseButton1Click:Connect(function()
     down.Visible = false
     onof.Visible = false
     plus.Visible = false
-    speedText.Visible = false
+    speedTextBox.Visible = false -- ALTERAÇÃO: speedTextBox
     mine.Visible = false
     miniButton.Visible = false
     maxiButton.Visible = true
@@ -452,7 +481,7 @@ maxiButton.MouseButton1Click:Connect(function()
     down.Visible = true
     onof.Visible = true
     plus.Visible = true
-    speedText.Visible = true
+    speedTextBox.Visible = true -- ALTERAÇÃO: speedTextBox
     mine.Visible = true
     miniButton.Visible = true
     maxiButton.Visible = false
