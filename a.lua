@@ -143,6 +143,8 @@ novoBotao("TouchFling",   "https://raw.githubusercontent.com/BancoCentraI/test/r
 novoBotao("Stalker",      "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/stalker.lua")
 novoBotao("TP Player",    "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/tpplayer.lua")
 novoBotao("NobanVoice",   "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/voiceremoveban5minutos.lua")
+novoBotao("infiniteYield",   "https://raw.githubusercontent.com/BancoCentraI/test/refs/heads/main/InfiniteYield.lua")
+
 
 -- Abrir / Fechar com RightShift
 UIS.InputBegan:Connect(function(key, g)
@@ -150,3 +152,4 @@ UIS.InputBegan:Connect(function(key, g)
         frame.Visible = not frame.Visible
     end
 end)
+
